@@ -8,25 +8,46 @@ using System;
 [ExecuteAlways]
 public class CoodinateLabler : MonoBehaviour
 {
+    [Header("Color Settings")]
+    [SerializeField] private Color defaultColor = Color.white;
+    [SerializeField] private Color blockedColor = Color.gray;
+
     private TextMeshPro label;
-    Vector2Int coordinates = new Vector2Int();
+    private Waypoint waypoint;
+    private Vector2Int coordinates = new Vector2Int();
 
     private void Awake()
     {
         label = GetComponent<TextMeshPro>();
+        label.enabled = false;
+
+        waypoint = GetComponentInParent<Waypoint>();
         DisplayCoordinates();
-        UpdateObjectName();
     }
 
     private void Update()
     {
-        if (Application.isPlaying)
+        if (!Application.isPlaying)
         {
-            return;
+            DisplayCoordinates();
+            UpdateObjectName();
         }
 
-        DisplayCoordinates();
-        UpdateObjectName();
+        ColorCoordinates();
+        ToggleLabels();
+    }
+
+    private void ToggleLabels()
+    {
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            label.enabled = label.enabled ? false : true;
+        }
+    }
+
+    private void ColorCoordinates()
+    {
+        label.color = waypoint.IsPlaceable ? blockedColor : defaultColor;
     }
 
     private void UpdateObjectName()
@@ -36,8 +57,8 @@ public class CoodinateLabler : MonoBehaviour
 
     private void DisplayCoordinates()
     {
-        coordinates.x = Mathf.RoundToInt(transform.parent.position.x / UnityEditor.EditorSnapSettings.move.x);
-        coordinates.y = Mathf.RoundToInt(transform.parent.position.z / UnityEditor.EditorSnapSettings.move.z);
+        coordinates.x = Mathf.RoundToInt(transform.parent.position.x / 10);
+        coordinates.y = Mathf.RoundToInt(transform.parent.position.z / 10);
         label.text = $"{coordinates.x}, {coordinates.y}";
     }
 }
