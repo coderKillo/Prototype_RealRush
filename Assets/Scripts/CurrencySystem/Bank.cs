@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor.SceneManagement;
 
 public class Bank : MonoBehaviour
 {
@@ -12,15 +14,35 @@ public class Bank : MonoBehaviour
     private void Awake()
     {
         currentBalance = startBalance;
+        UpdateDisplay();
     }
+
 
     public void Deposit(int amount)
     {
         currentBalance += Mathf.Abs(amount);
+        UpdateDisplay();
     }
 
     public void WithDraw(int amount)
     {
         currentBalance -= Mathf.Abs(amount);
+        UpdateDisplay();
+
+        if (currentBalance < 0)
+        {
+            ReloadScene();
+        }
+    }
+
+    private void UpdateDisplay()
+    {
+        PlayerUI.Instance.ShowBalance(currentBalance);
+    }
+
+    private void ReloadScene()
+    {
+        var scene = EditorSceneManager.GetActiveScene();
+        EditorSceneManager.LoadScene(scene.buildIndex);
     }
 }
