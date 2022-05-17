@@ -9,11 +9,18 @@ public class EnemyMover : MonoBehaviour
 
     public bool isMoving { get; private set; } = false;
 
+    private Enemy enemy;
+
     private void OnEnable()
     {
         FindPath();
         ReturnToStart();
         StartCoroutine(FollowPath());
+    }
+
+    private void Start()
+    {
+        enemy = GetComponent<Enemy>();
     }
 
     private void FindPath()
@@ -56,5 +63,6 @@ public class EnemyMover : MonoBehaviour
 
         isMoving = false;
         gameObject.SetActive(false);
+        enemy.PenaltyGold();
     }
 }
