@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class EnemyMover : MonoBehaviour
 {
-    [SerializeField] private List<Waypoint> path;
+    [SerializeField] private Waypoint[] path;
     [SerializeField][Range(0, 5)] private float speed;
 
     public bool isMoving { get; private set; } = false;
 
-    void Start()
+    private void OnEnable()
     {
         FindPath();
         ReturnToStart();
@@ -18,16 +18,7 @@ public class EnemyMover : MonoBehaviour
 
     private void FindPath()
     {
-        path.Clear();
-
-        GameObject[] waypoints = GameObject.FindGameObjectsWithTag("Path");
-
-        foreach (var waypoint in waypoints)
-        {
-            path.Add(waypoint.GetComponent<Waypoint>());
-        }
-
-        path.Sort((w1, w2) => Vector3.Distance(w1.transform.position, transform.position).CompareTo(Vector3.Distance(w2.transform.position, transform.position)));
+        path = GameObject.FindGameObjectWithTag("Path").GetComponentsInChildren<Waypoint>();
     }
 
     private void ReturnToStart()
@@ -64,6 +55,6 @@ public class EnemyMover : MonoBehaviour
         }
 
         isMoving = false;
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }
