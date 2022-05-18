@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Enemy))]
 public class EnemyMover : MonoBehaviour
 {
     [SerializeField] private Waypoint[] path;
@@ -61,6 +62,11 @@ public class EnemyMover : MonoBehaviour
             }
         }
 
+        FinishPath();
+    }
+
+    private void FinishPath()
+    {
         isMoving = false;
         gameObject.SetActive(false);
         enemy.PenaltyGold();

@@ -6,6 +6,7 @@ using TMPro;
 using System;
 
 [ExecuteAlways]
+[RequireComponent(typeof(TextMeshPro))]
 public class CoodinateLabler : MonoBehaviour
 {
     [Header("Color Settings")]
@@ -31,6 +32,7 @@ public class CoodinateLabler : MonoBehaviour
         {
             DisplayCoordinates();
             UpdateObjectName();
+            label.enabled = true;
         }
 
         ColorCoordinates();

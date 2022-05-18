@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Enemy))]
 public class EnemyHealth : MonoBehaviour
 {
     [SerializeField] private int maxHitpoints = 5;
+    [SerializeField] private int difficultyRamp = 2;
     [SerializeField] private Slider slider;
 
     private Enemy enemy;
@@ -33,6 +35,7 @@ public class EnemyHealth : MonoBehaviour
         {
             gameObject.SetActive(false);
             enemy.RewardGold();
+            maxHitpoints += difficultyRamp;
         }
     }
 }

@@ -10,7 +10,7 @@ public class Tower : MonoBehaviour
     {
         var bank = FindObjectOfType<Bank>();
 
-        if (bank.CurrentBalance < 0)
+        if (bank.CurrentBalance - cost < 0)
         {
             return false;
         }
