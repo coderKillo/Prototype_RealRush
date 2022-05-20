@@ -37,16 +37,13 @@ public class Tile : MonoBehaviour
         if (gridManager == null) { return; }
         if (pathfinder == null) { return; }
         if (!gridManager.ContainsKey(coordinates)) { return; }
+        if (!gridManager.GetNode(coordinates).isWalkable) { return; }
+        if (pathfinder.WillBlockPath(coordinates)) { return; }
 
-        if (gridManager.GetNode(coordinates).isWalkable && !pathfinder.WillBlockPath(coordinates))
+        if (towerPrefab.CreateTower(towerPrefab.gameObject, transform.position))
         {
-            bool isPlaced = towerPrefab.CreateTower(towerPrefab.gameObject, transform.position);
-            isPlaceable = !isPlaced;
-
-            if (!isPlaceable)
-            {
-                gridManager.BlockNode(coordinates);
-            }
+            gridManager.BlockNode(coordinates);
+            pathfinder.NotifyReceivers();
         }
     }
 }

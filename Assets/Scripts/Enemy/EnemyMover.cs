@@ -18,9 +18,8 @@ public class EnemyMover : MonoBehaviour
 
     private void OnEnable()
     {
-        FindPath();
         ReturnToStart();
-        StartCoroutine(FollowPath());
+        RecalculatePath();
     }
 
     private void Awake()
@@ -30,9 +29,14 @@ public class EnemyMover : MonoBehaviour
         pathfinder = FindObjectOfType<Pathfinder>();
     }
 
-    private void FindPath()
+    public void RecalculatePath()
     {
-        path = pathfinder.GetNewPath();
+        var coordinates = gridManager.GetCoordinatesFromPosition(transform.position);
+
+        StopAllCoroutines();
+        path.Clear();
+        path = pathfinder.GetNewPath(coordinates);
+        StartCoroutine(FollowPath());
     }
 
     private void ReturnToStart()
@@ -42,7 +46,7 @@ public class EnemyMover : MonoBehaviour
 
     IEnumerator FollowPath()
     {
-        for (int i = 0; i < path.Count; i++)
+        for (int i = 1; i < path.Count; i++)
         {
             isMoving = true;
 
