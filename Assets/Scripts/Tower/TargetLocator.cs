@@ -37,6 +37,8 @@ public class TargetLocator : MonoBehaviour
 
     private void AimAtTarget()
     {
+        if (target == null) { return; }
+
         float targetDistance = Vector3.Distance(target.transform.position, transform.position);
 
         Attack(targetDistance < range);

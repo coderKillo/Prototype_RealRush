@@ -16,6 +16,7 @@ public class Pathfinder : MonoBehaviour
 
     private Vector2Int[] directions = { Vector2Int.right, Vector2Int.left, Vector2Int.up, Vector2Int.down };
     private GridManager gridManager;
+    private Dictionary<Vector2Int, Node> Grid = new Dictionary<Vector2Int, Node>();
 
 
     private void Awake()
@@ -28,8 +29,14 @@ public class Pathfinder : MonoBehaviour
         startNode = gridManager.GetNode(startCoordinates);
         destinationNode = gridManager.GetNode(destinationCoordinates);
 
+        GetNewPath();
+    }
+
+    private List<Node> GetNewPath()
+    {
+        gridManager.ResetNotes();
         BreathFistSearch();
-        BuildPath();
+        return BuildPath();
     }
 
     private void ExploreNeighbors()
@@ -63,6 +70,9 @@ public class Pathfinder : MonoBehaviour
 
     private void BreathFistSearch()
     {
+        frontier.Clear();
+        reached.Clear();
+
         bool isRunning = true;
 
         frontier.Enqueue(startNode);
@@ -98,5 +108,25 @@ public class Pathfinder : MonoBehaviour
         path.Reverse();
 
         return path;
+    }
+
+    public bool WillBlockPath(Vector2Int coordinates)
+    {
+        if (gridManager.ContainsKey(coordinates))
+        {
+            bool previousState = gridManager.GetNode(coordinates).isWalkable;
+
+            gridManager.GetNode(coordinates).isWalkable = false;
+            List<Node> newPath = GetNewPath();
+            gridManager.GetNode(coordinates).isWalkable = previousState;
+
+            if (newPath.Count < 1)
+            {
+                GetNewPath();
+                return true;
+            }
+        }
+
+        return false;
     }
 }

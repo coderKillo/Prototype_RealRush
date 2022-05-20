@@ -11,6 +11,18 @@ PrefabInstance:
       propertyPath: isPlaceable
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5747343741470083694, guid: e8d59dbabe0f4ea4a8c89ef2f1fb738f, type: 3}
+      propertyPath: notGridColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5747343741470083694, guid: e8d59dbabe0f4ea4a8c89ef2f1fb738f, type: 3}
+      propertyPath: notGridColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5747343741470083694, guid: e8d59dbabe0f4ea4a8c89ef2f1fb738f, type: 3}
+      propertyPath: notGridColor.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6822758225119967467, guid: e8d59dbabe0f4ea4a8c89ef2f1fb738f, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -62,6 +74,30 @@ PrefabInstance:
     - target: {fileID: 8408152124369128889, guid: e8d59dbabe0f4ea4a8c89ef2f1fb738f, type: 3}
       propertyPath: m_Name
       value: Tile_RoadCorner
+      objectReference: {fileID: 0}
+    - target: {fileID: 8408152125861401893, guid: e8d59dbabe0f4ea4a8c89ef2f1fb738f, type: 3}
+      propertyPath: m_text
+      value: 0, 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8408152125861401893, guid: e8d59dbabe0f4ea4a8c89ef2f1fb738f, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8408152125861401893, guid: e8d59dbabe0f4ea4a8c89ef2f1fb738f, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8408152125861401893, guid: e8d59dbabe0f4ea4a8c89ef2f1fb738f, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8408152125861401893, guid: e8d59dbabe0f4ea4a8c89ef2f1fb738f, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8408152125861401893, guid: e8d59dbabe0f4ea4a8c89ef2f1fb738f, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4278190080
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e8d59dbabe0f4ea4a8c89ef2f1fb738f, type: 3}

@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Enemy))]
 public class EnemyMover : MonoBehaviour
 {
-    [SerializeField] private Waypoint[] path;
+    [SerializeField] private Tile[] path;
     [SerializeField][Range(0, 5)] private float speed;
 
     public bool isMoving { get; private set; } = false;
@@ -26,7 +26,7 @@ public class EnemyMover : MonoBehaviour
 
     private void FindPath()
     {
-        path = GameObject.FindGameObjectWithTag("Path").GetComponentsInChildren<Waypoint>();
+        path = GameObject.FindGameObjectWithTag("Path").GetComponentsInChildren<Tile>();
     }
 
     private void ReturnToStart()

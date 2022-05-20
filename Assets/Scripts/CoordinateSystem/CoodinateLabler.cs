@@ -13,6 +13,7 @@ public class CoodinateLabler : MonoBehaviour
     [Header("Color Settings")]
     [SerializeField] private Color defaultColor = Color.white;
     [SerializeField] private Color blockedColor = Color.gray;
+    [SerializeField] private Color notGridColor = Color.black;
     [SerializeField] private Color exploredColor = Color.yellow;
     [SerializeField] private Color pathColor = new Color(1f, 0.5f, 0f);
 
@@ -57,7 +58,11 @@ public class CoodinateLabler : MonoBehaviour
 
         Node node = gridManager.GetNode(coordinates);
 
-        if (node == null) { return; }
+        if (node == null)
+        {
+            label.color = notGridColor;
+            return;
+        }
 
         if (!node.isWalkable)
         {
@@ -71,6 +76,10 @@ public class CoodinateLabler : MonoBehaviour
         {
             label.color = exploredColor;
         }
+        else
+        {
+            label.color = defaultColor;
+        }
     }
 
     private void UpdateObjectName()
@@ -80,8 +89,10 @@ public class CoodinateLabler : MonoBehaviour
 
     private void DisplayCoordinates()
     {
-        coordinates.x = Mathf.RoundToInt(transform.parent.position.x / 10);
-        coordinates.y = Mathf.RoundToInt(transform.parent.position.z / 10);
+        if (gridManager == null) { return; }
+
+        coordinates.x = Mathf.RoundToInt(transform.parent.position.x / gridManager.UnityGridSize);
+        coordinates.y = Mathf.RoundToInt(transform.parent.position.z / gridManager.UnityGridSize);
         label.text = $"{coordinates.x}, {coordinates.y}";
     }
 }

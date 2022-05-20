@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 861962590475898382, guid: e8f7658bc3e2db141b0488c364b008ce, type: 3}
+      propertyPath: isPlaceable
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2242847554782844897, guid: e8f7658bc3e2db141b0488c364b008ce, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.7071068
