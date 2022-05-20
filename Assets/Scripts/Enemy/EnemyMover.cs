@@ -1,3 +1,4 @@
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,12 +6,15 @@ using UnityEngine;
 [RequireComponent(typeof(Enemy))]
 public class EnemyMover : MonoBehaviour
 {
-    [SerializeField] private Tile[] path;
     [SerializeField][Range(0, 5)] private float speed;
+
+    List<Node> path = new List<Node>();
 
     public bool isMoving { get; private set; } = false;
 
     private Enemy enemy;
+    private GridManager gridManager;
+    private Pathfinder pathfinder;
 
     private void OnEnable()
     {
@@ -19,37 +23,31 @@ public class EnemyMover : MonoBehaviour
         StartCoroutine(FollowPath());
     }
 
-    private void Start()
+    private void Awake()
     {
         enemy = GetComponent<Enemy>();
+        gridManager = FindObjectOfType<GridManager>();
+        pathfinder = FindObjectOfType<Pathfinder>();
     }
 
     private void FindPath()
     {
-        path = GameObject.FindGameObjectWithTag("Path").GetComponentsInChildren<Tile>();
+        path = pathfinder.GetNewPath();
     }
 
     private void ReturnToStart()
     {
-        transform.position = path[0].transform.position;
-    }
-
-    private void PrintWaypoint()
-    {
-        foreach (var waypoint in path)
-        {
-            Debug.Log(waypoint.name);
-        }
+        transform.position = gridManager.GetPositionFromCoordinates(pathfinder.StartCoordinates);
     }
 
     IEnumerator FollowPath()
     {
-        foreach (var waypoint in path)
+        for (int i = 0; i < path.Count; i++)
         {
             isMoving = true;
 
             var startPos = transform.position;
-            var endPos = waypoint.transform.position;
+            var endPos = gridManager.GetPositionFromCoordinates(path[i].coordinates);
             var travelPercent = 0f;
 
             transform.LookAt(endPos);

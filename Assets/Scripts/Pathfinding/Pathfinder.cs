@@ -5,7 +5,10 @@ using UnityEngine;
 public class Pathfinder : MonoBehaviour
 {
     [SerializeField] private Vector2Int startCoordinates;
+    public Vector2Int StartCoordinates { get { return startCoordinates; } }
+
     [SerializeField] private Vector2Int destinationCoordinates;
+    public Vector2Int DestinationCoordinates { get { return destinationCoordinates; } }
 
     private Node currentSearchNode;
     private Node startNode;
@@ -22,17 +25,11 @@ public class Pathfinder : MonoBehaviour
     private void Awake()
     {
         gridManager = FindObjectOfType<GridManager>();
-    }
-
-    private void Start()
-    {
         startNode = gridManager.GetNode(startCoordinates);
         destinationNode = gridManager.GetNode(destinationCoordinates);
-
-        GetNewPath();
     }
 
-    private List<Node> GetNewPath()
+    public List<Node> GetNewPath()
     {
         gridManager.ResetNotes();
         BreathFistSearch();
@@ -70,6 +67,9 @@ public class Pathfinder : MonoBehaviour
 
     private void BreathFistSearch()
     {
+        startNode.isWalkable = true;
+        destinationNode.isWalkable = true;
+
         frontier.Clear();
         reached.Clear();
 
