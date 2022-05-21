@@ -13,8 +13,6 @@ public class EnemyMover : MonoBehaviour
     public bool isMoving { get; private set; } = false;
 
     private Enemy enemy;
-    private GridManager gridManager;
-    private Pathfinder pathfinder;
 
     private void OnEnable()
     {
@@ -25,23 +23,21 @@ public class EnemyMover : MonoBehaviour
     private void Awake()
     {
         enemy = GetComponent<Enemy>();
-        gridManager = FindObjectOfType<GridManager>();
-        pathfinder = FindObjectOfType<Pathfinder>();
     }
 
     public void RecalculatePath()
     {
-        var coordinates = gridManager.GetCoordinatesFromPosition(transform.position);
+        var coordinates = GridManager.GetCoordinatesFromPosition(transform.position);
 
         StopAllCoroutines();
         path.Clear();
-        path = pathfinder.GetNewPath(coordinates);
+        path = Pathfinder.Instance.GetNewPath(coordinates);
         StartCoroutine(FollowPath());
     }
 
     private void ReturnToStart()
     {
-        transform.position = gridManager.GetPositionFromCoordinates(pathfinder.StartCoordinates);
+        transform.position = GridManager.GetPositionFromCoordinates(Pathfinder.Instance.StartCoordinates);
     }
 
     IEnumerator FollowPath()
@@ -51,7 +47,7 @@ public class EnemyMover : MonoBehaviour
             isMoving = true;
 
             var startPos = transform.position;
-            var endPos = gridManager.GetPositionFromCoordinates(path[i].coordinates);
+            var endPos = GridManager.GetPositionFromCoordinates(path[i].coordinates);
             var travelPercent = 0f;
 
             transform.LookAt(endPos);

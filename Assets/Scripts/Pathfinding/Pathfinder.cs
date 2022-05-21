@@ -18,20 +18,21 @@ public class Pathfinder : MonoBehaviour
     private Dictionary<Vector2Int, Node> reached = new Dictionary<Vector2Int, Node>();
 
     private Vector2Int[] directions = { Vector2Int.right, Vector2Int.left, Vector2Int.up, Vector2Int.down };
-    private GridManager gridManager;
     private Dictionary<Vector2Int, Node> Grid = new Dictionary<Vector2Int, Node>();
 
+    static private Pathfinder instance;
+    static public Pathfinder Instance { get { return instance; } }
 
     private void Awake()
     {
-        gridManager = FindObjectOfType<GridManager>();
-        startNode = gridManager.GetNode(startCoordinates);
-        destinationNode = gridManager.GetNode(destinationCoordinates);
+        instance = this;
+        startNode = GridManager.Instance.GetNode(startCoordinates);
+        destinationNode = GridManager.Instance.GetNode(destinationCoordinates);
     }
 
     public List<Node> GetNewPath(Vector2Int coordinates)
     {
-        gridManager.ResetNotes();
+        GridManager.Instance.ResetNotes();
         BreathFistSearch(coordinates);
         return BuildPath();
     }
@@ -48,9 +49,9 @@ public class Pathfinder : MonoBehaviour
         foreach (var direction in directions)
         {
             var neighborCoord = currentSearchNode.coordinates + direction;
-            if (gridManager.ContainsKey(neighborCoord))
+            if (GridManager.Instance.ContainsKey(neighborCoord))
             {
-                neighbors.Add(gridManager.GetNode(neighborCoord));
+                neighbors.Add(GridManager.Instance.GetNode(neighborCoord));
             }
         }
 
@@ -75,8 +76,8 @@ public class Pathfinder : MonoBehaviour
 
         bool isRunning = true;
 
-        frontier.Enqueue(gridManager.GetNode(coordinates));
-        reached.Add(coordinates, gridManager.GetNode(coordinates));
+        frontier.Enqueue(GridManager.Instance.GetNode(coordinates));
+        reached.Add(coordinates, GridManager.Instance.GetNode(coordinates));
 
         while (frontier.Count > 0 && isRunning)
         {
@@ -112,13 +113,13 @@ public class Pathfinder : MonoBehaviour
 
     public bool WillBlockPath(Vector2Int coordinates)
     {
-        if (gridManager.ContainsKey(coordinates))
+        if (GridManager.Instance.ContainsKey(coordinates))
         {
-            bool previousState = gridManager.GetNode(coordinates).isWalkable;
+            bool previousState = GridManager.Instance.GetNode(coordinates).isWalkable;
 
-            gridManager.GetNode(coordinates).isWalkable = false;
+            GridManager.Instance.GetNode(coordinates).isWalkable = false;
             List<Node> newPath = GetNewPath();
-            gridManager.GetNode(coordinates).isWalkable = previousState;
+            GridManager.Instance.GetNode(coordinates).isWalkable = previousState;
 
             if (newPath.Count < 1)
             {

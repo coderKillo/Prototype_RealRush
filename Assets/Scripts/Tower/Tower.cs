@@ -9,14 +9,12 @@ public class Tower : MonoBehaviour
 
     public bool CreateTower(GameObject prefab, Vector3 position)
     {
-        var bank = FindObjectOfType<Bank>();
-
-        if (bank.CurrentBalance - cost < 0)
+        if (Bank.Instance.CurrentBalance - cost < 0)
         {
             return false;
         }
 
-        bank.WithDraw(cost);
+        Bank.Instance.WithDraw(cost);
         GameObject.Instantiate(prefab, position, Quaternion.identity);
 
         return true;

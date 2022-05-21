@@ -11,8 +11,12 @@ public class Bank : MonoBehaviour
     private int currentBalance;
     public int CurrentBalance { get { return currentBalance; } }
 
+    static private Bank instance;
+    static public Bank Instance { get { return instance; } }
+
     private void Awake()
     {
+        instance = this;
         currentBalance = startBalance;
         UpdateDisplay();
     }

@@ -19,14 +19,11 @@ public class CoodinateLabler : MonoBehaviour
 
     private TextMeshPro label;
     private Vector2Int coordinates = new Vector2Int();
-    private GridManager gridManager;
 
     private void Awake()
     {
         label = GetComponent<TextMeshPro>();
         label.enabled = false;
-
-        gridManager = FindObjectOfType<GridManager>();
 
         DisplayCoordinates();
     }
@@ -54,9 +51,9 @@ public class CoodinateLabler : MonoBehaviour
 
     private void ColorCoordinates()
     {
-        if (gridManager == null) { return; }
+        if (GridManager.Instance == null) { return; }
 
-        Node node = gridManager.GetNode(coordinates);
+        Node node = GridManager.Instance.GetNode(coordinates);
 
         if (node == null)
         {
@@ -89,10 +86,10 @@ public class CoodinateLabler : MonoBehaviour
 
     private void DisplayCoordinates()
     {
-        if (gridManager == null) { return; }
+        if (GridManager.Instance == null) { return; }
 
-        coordinates.x = Mathf.RoundToInt(transform.parent.position.x / gridManager.UnityGridSize);
-        coordinates.y = Mathf.RoundToInt(transform.parent.position.z / gridManager.UnityGridSize);
+        coordinates.x = Mathf.RoundToInt(transform.parent.position.x / GridManager.Instance.UnityGridSize);
+        coordinates.y = Mathf.RoundToInt(transform.parent.position.z / GridManager.Instance.UnityGridSize);
         label.text = $"{coordinates.x}, {coordinates.y}";
     }
 }

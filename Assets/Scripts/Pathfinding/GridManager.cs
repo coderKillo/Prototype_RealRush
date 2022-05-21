@@ -14,8 +14,12 @@ public class GridManager : MonoBehaviour
     Dictionary<Vector2Int, Node> grid = new Dictionary<Vector2Int, Node>();
     public Dictionary<Vector2Int, Node> Grid { get { return grid; } }
 
+    static private GridManager instance;
+    static public GridManager Instance { get { return instance; } }
+
     private void Awake()
     {
+        instance = this;
         CreateGrid();
     }
 
@@ -42,20 +46,20 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    public Vector2Int GetCoordinatesFromPosition(Vector3 position)
+    static public Vector2Int GetCoordinatesFromPosition(Vector3 position)
     {
         return new Vector2Int(
-            Mathf.RoundToInt(position.x / unityGridSize),
-            Mathf.RoundToInt(position.z / unityGridSize)
+            Mathf.RoundToInt(position.x / GridManager.Instance.UnityGridSize),
+            Mathf.RoundToInt(position.z / GridManager.Instance.UnityGridSize)
         );
     }
 
-    public Vector3 GetPositionFromCoordinates(Vector2Int coordinates)
+    static public Vector3 GetPositionFromCoordinates(Vector2Int coordinates)
     {
         return new Vector3(
-            coordinates.x * unityGridSize,
+            coordinates.x * GridManager.Instance.UnityGridSize,
             0,
-            coordinates.y * unityGridSize
+            coordinates.y * GridManager.Instance.UnityGridSize
         );
     }
 
