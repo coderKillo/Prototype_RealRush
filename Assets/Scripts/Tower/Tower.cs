@@ -38,8 +38,8 @@ public class Tower : MonoBehaviour
 
         foreach (Transform child in transform)
         {
-            yield return new WaitForSeconds(buildTime / transform.childCount);
             child.gameObject.SetActive(true);
+            yield return new WaitForSeconds(buildTime / transform.childCount);
             foreach (Transform grandchild in child)
             {
                 grandchild.gameObject.SetActive(true);

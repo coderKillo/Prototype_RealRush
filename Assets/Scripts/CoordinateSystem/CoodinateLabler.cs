@@ -34,7 +34,7 @@ public class CoodinateLabler : MonoBehaviour
         {
             DisplayCoordinates();
             UpdateObjectName();
-            label.enabled = true;
+            label.enabled = false;
         }
 
         ColorCoordinates();
@@ -90,6 +90,9 @@ public class CoodinateLabler : MonoBehaviour
 
         coordinates.x = Mathf.RoundToInt(transform.parent.position.x / GridManager.Instance.UnityGridSize);
         coordinates.y = Mathf.RoundToInt(transform.parent.position.z / GridManager.Instance.UnityGridSize);
+
+        if (coordinates == new Vector2Int()) { return; }
+
         label.text = $"{coordinates.x}, {coordinates.y}";
     }
 }
